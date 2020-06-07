@@ -1,5 +1,5 @@
 import numpy as np
-
+import matplotlib.pyplot as plt 
 
 class Hopfield():
 
@@ -48,7 +48,6 @@ class Hopfield():
       V_s = np.array(V_s)
       self.T += np.outer(V_s, V_s)
       np.fill_diagonal(self.T, 0)
-      plt.matshow(self.T)
     self.T = self.T / self.T.shape[0]
     return self.T
 
