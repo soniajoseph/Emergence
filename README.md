@@ -2,6 +2,8 @@
 
 This is a research library to study the emergent properties of undirected neural networks, including Hopfield networks and Boltzmann machines.
 
+**To read more about Hopfield networks, see the primer I wrote [here](https://soniajoseph.github.io/computational%20neuroscience/neural-dynamics-primer/).**
+
 ## Setup
 
 Set up your local environment and download the requirements.txt.
@@ -15,13 +17,19 @@ See /tests for sample use cases.
 
 ## Hopfield Networks
 
-![Image](images/FMNIST.png)
+![Image](images/FMNIST.png =250x)
 
 Hopfield networks are fascinating one-shot data-denoisers. We train the network to "remember" the top row of images using Hebbian learning. The network does not store the actual image, but encodes information of the image in its weights.
 
 Then, we add noise to the image, randomly setting 30% of the pixels to the opposite value. When we feed each random image into the pre-trained Hopfield network, we get the original image back (bottom row)! 
 
-To read more about Hopfield networks, see the primer I wrote [here](https://soniajoseph.github.io/computational%20neuroscience/neural-dynamics-primer/).
+### Example
+
+**Training Input:**
+
+**Testing Input:**
+
+**Returned Image:**
 
 ### Use
 
