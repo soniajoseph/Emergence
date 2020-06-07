@@ -20,7 +20,7 @@ fashion_mnist = keras.datasets.fashion_mnist
 
 # Preprocess
 row, col = train_images[0].shape
-data = train_images[:10]
+data = train_images[5:9]
 data = [normalize_binarize(i) for i in data]
 data = [i.flatten() for i in data]
 
@@ -37,6 +37,14 @@ print("Running network on noisy data...")
 data_hat = [hn.run(i, 1) for i in noise_data]
 
 # Plot
-for i in range(1, 31):
-    plt.subplot(3, 10, i)
+print("Plotting results...")
+total_data = data
+total_data += noise_data
+total_data += data_hat
+print("length total data: ", len(total_data))
+plt.figure()
+for i in range(1, len(total_data)+1):
+    plt.subplot(3, 4, i)
+    plt.matshow(total_data[i-1].reshape(row,col), fignum=False)
+plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[]);
 plt.show()
