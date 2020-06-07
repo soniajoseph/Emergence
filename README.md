@@ -32,7 +32,7 @@ Then, we add noise to the image, randomly setting 30% of the pixels to the oppos
   </tr>
   <tr>
     <td><b>Noisy</b></td>
-    <td><<img src="images/FMNIST_test.png" width="100"></td>
+    <td><img src="images/FMNIST_test.png" width="100"></td>
   </tr>
   <tr>
     <td><b>Reconstructed</b></td>
