@@ -25,20 +25,11 @@ Then, we add noise to the image, randomly setting 30% of the pixels to the oppos
 
 ### Example on FMNIST
 
-**Training Input:**
-<img src="images/FMNIST_orig.png" width="100">
-
-**Testing Input:**
-<img src="images/FMNIST_test.png" width="100">
-
-**Returned Image:**
-<img src="images/FMNIST_return.png" width="100">
-
 <table style="width:100%">
   <tr>
-    <td>Original</td>
+    <td><b>Original</b></td>
     <td><img src="images/FMNIST_orig.png" width="100"></td>
-\  </tr>
+  </tr>
   <tr>
     <td>Noisy</td>
     <td><img src="images/FMNIST_test.png" width="100"></td>
