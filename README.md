@@ -19,11 +19,11 @@ See /tests for sample use cases.
 
 <img src="images/FMNIST.png" width="500" class="center">
 
-Hopfield networks are fascinating one-shot data-denoisers. We train the network to "remember" the top row of images using Hebbian learning. The network does not store the actual image, but encodes information of the image in its weights.
+Hopfield networks are fascinating one-shot data-denoisers. We train the network to "remember" the top row of fashion MNIST images using Hebbian learning. The network does not store the actual image, but encodes information of the image in its weights.
 
 Then, we add noise to the image, randomly setting 30% of the pixels to the opposite value. When we feed each random image into the pre-trained Hopfield network, we get the original image back (bottom row)! 
 
-### Example
+### Example on FMNIST
 
 **Training Input:**
 <img src="images/FMNIST_orig.png" width="100">
@@ -33,6 +33,21 @@ Then, we add noise to the image, randomly setting 30% of the pixels to the oppos
 
 **Returned Image:**
 <img src="images/FMNIST_return.png" width="100">
+
+<table style="width:100%">
+  <tr>
+    <td>Original</td>
+    <td><img src="images/FMNIST_orig.png" width="100"></td>
+\  </tr>
+  <tr>
+    <td>Noisy</td>
+    <td><img src="images/FMNIST_test.png" width="100"></td>
+  </tr>
+  <tr>
+    <td>Reconstructed</td>
+    <td><img src="images/FMNIST_return.png" width="100"></td>
+  </tr>
+</table>
 
 ### Use
 
