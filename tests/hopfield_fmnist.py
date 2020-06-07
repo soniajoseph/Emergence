@@ -41,7 +41,6 @@ print("Plotting results...")
 total_data = data
 total_data += noise_data
 total_data += data_hat
-print("length total data: ", len(total_data))
 plt.figure()
 for i in range(1, len(total_data)+1):
     plt.subplot(3, 4, i)
