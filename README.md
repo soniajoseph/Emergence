@@ -17,7 +17,7 @@ See /tests for sample use cases.
 
 ## Hopfield Networks
 
-![Image](images/FMNIST.png =250x)
+<img src="images/FMNIST.png" width="200">
 
 Hopfield networks are fascinating one-shot data-denoisers. We train the network to "remember" the top row of images using Hebbian learning. The network does not store the actual image, but encodes information of the image in its weights.
 
