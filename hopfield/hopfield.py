@@ -21,6 +21,7 @@ class Hopfield():
     U = 0
     V_hat = V_noise.copy()
     for t in range(iterations):
+      e = self.energy(V_hat)
       for i, _ in enumerate(self.T[:,0]):
         total = 0
         for j,_ in enumerate(self.T[i,:]):
@@ -30,7 +31,24 @@ class Hopfield():
           V_hat[i] = 1
         else:
           V_hat[i] = -1
+      e_new = self.energy(V_hat)
+      if e_new == e:
+        return V_hat
     return V_hat
+
+
+  def energy(self, v):
+    """
+    Get energy function of network, useful for knowing when network has converged.
+
+    Args:
+      v (vector)
+
+    Returns:
+      e (float)
+    """
+    e = -.5 * v @ self.T @ v 
+    return e
 
 
   def train(self, data):
@@ -50,6 +68,7 @@ class Hopfield():
       np.fill_diagonal(self.T, 0)
     self.T = self.T / self.T.shape[0]
     return self.T
+
 
 
 
