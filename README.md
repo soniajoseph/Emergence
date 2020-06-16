@@ -65,4 +65,9 @@ noise_data = [noise_image(i, .3) for i in data]
 data_hat = [hn.run(i, 1) for i in noise_data]
 ```
 
+Run above file
+```
+python -m emergence.tests.hopfield_fmnist
+```
+
 See /tests for more examples.
