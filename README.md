@@ -71,3 +71,6 @@ python -m emergence.tests.hopfield_fmnist
 ```
 
 See /tests for more examples.
+
+## Resources
+[Neural networks and physical systems with emergent collective computational abilities](https://www.pnas.org/content/79/8/2554)
