@@ -74,4 +74,5 @@ See /tests for more examples.
 
 ## Resources
 [Hopfield Networks - A Primer](https://soniajoseph.github.io/computational%20neuroscience/neural-dynamics-primer/)
+
 [Neural networks and physical systems with emergent collective computational abilities](https://www.pnas.org/content/79/8/2554)
