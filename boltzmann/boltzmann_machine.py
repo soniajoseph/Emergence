@@ -5,7 +5,7 @@ from hopfield.hopfield import Hopfield
 
 
 class BoltzmannMachine(Hopfield):
-    def __init__(self, n_visible_units, n_hidden_units, k=10, lr=1, n_epochs=10, batch_size=1):
+    def __init__(self, n_visible_units, n_hidden_units, k=5, lr=1, n_epochs=10, batch_size=1):
         super(BoltzmannMachine, self).__init__()
         self.n_visible_units = n_visible_units
         self.n_hidden_units = n_hidden_units
@@ -26,24 +26,22 @@ class BoltzmannMachine(Hopfield):
         return probability_v_given_h, np.random.binomial(1, probability_v_given_h)
 
     def update(self, v0, vk, p_h0, p_hk):
-        self.T += self.lr * (v0.T @ p_h0 - vk.T @ p_hk)
-        self.v_bias += self.lr * (np.sum(v0 - vk, axis=0))
-        self.h_bias += self.lr * (np.sum(p_h0 - p_hk, axis=0))
+        self.T += self.lr * (v0.T @ p_h0 - vk.T @ p_hk) / self.batch_size
+        self.v_bias += self.lr * (np.mean(v0 - vk, axis=0))
+        self.h_bias += self.lr * (np.mean(p_h0 - p_hk, axis=0))
 
     def contrastive_divergence(self, v):
-        v0 = v
         vk = v.copy()
-        ph_v, _ = self.sample_hidden(v0)
+        ph_v, _ = self.sample_hidden(v)
 
         # Gibbs sampling
         for k in range(self.k):
             _, hk = self.sample_hidden(vk)
             _, vk = self.sample_visible(hk)
-            vk[v0 < 0] = v0[v0 < 0]
 
         ph_k, _ = self.sample_hidden(vk)
-        self.update(v0, vk, ph_v, ph_k)
-        return v0, vk
+        self.update(v, vk, ph_v, ph_k)
+        return v, vk
 
     def energy(self, v):
         _, hs = self.sample_hidden(v)
