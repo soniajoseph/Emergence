@@ -12,7 +12,7 @@ class BoltzmannMachine(Hopfield):
             n_visible_units (int): Number of visible units
             n_hidden_units (int): Number of hidden units
             k (int): k-folds for Gibbs sampling
-            lr (int): learning rate
+            lr (float): learning rate
             n_epochs (int): number of epochs
             batch_size (int): batch size
         """
