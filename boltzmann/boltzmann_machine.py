@@ -32,10 +32,10 @@ class BoltzmannMachine(Hopfield):
         """
         Visible units binomial sampling
         Args:
-            v (nd.array): input data
+            v (tensor): input data
 
         Returns:
-            nd.array, nd.array
+            tensor, tensor
         """
         probability_h_given_v = tf.sigmoid(v @ self.T + self.h_bias)
         return probability_h_given_v, tf.keras.backend.random_binomial(probability_h_given_v.shape,
@@ -45,10 +45,10 @@ class BoltzmannMachine(Hopfield):
         """
         Hidden units binomial sampling
         Args:
-            h (nd.array): hidden units data
+            h (tensor): hidden units data
 
         Returns:
-            nd.array, nd.array
+            tensor, tensor
         """
         probability_v_given_h = tf.sigmoid(h @ tf.transpose(self.T) + self.v_bias)
         return probability_v_given_h, tf.keras.backend.random_binomial(probability_v_given_h.shape,
@@ -58,10 +58,10 @@ class BoltzmannMachine(Hopfield):
         """
         Update weights and biases
         Args:
-            v0 (nd.array): Original input data
-            vk (nd.array): Sampled input data
-            p_h0 (nd.array): Probability of h = 1 given v0
-            p_hk (nd.array): Probability of h = 1 given vk
+            v0 (tensor): Original input data
+            vk (tensor): Sampled input data
+            p_h0 (tensor): Probability of h = 1 given v0
+            p_hk (tensor): Probability of h = 1 given vk
 
         """
         self.T += self.lr * (tf.transpose(v0) @ p_h0 - tf.transpose(vk) @ p_hk) / self.batch_size
@@ -72,10 +72,10 @@ class BoltzmannMachine(Hopfield):
         """
         Contrastive divergence
         Args:
-            v (nd.array): input data
+            v (tensor): input data
 
         Returns:
-            nd.array, nd.array: original input data and sampled data
+            tensor, tensor: original input data and sampled data
         """
         vk = v
         ph_v, _ = self.sample_hidden(v)
@@ -93,14 +93,14 @@ class BoltzmannMachine(Hopfield):
         """
         Network energy
         Args:
-            v (nd.array): input data
+            v (tensor): input data
 
         Returns:
             float: energy
         """
         _, hs = self.sample_hidden(v)
         e = - v @ tf.expand_dims(self.v_bias, 1) - hs @ tf.expand_dims(self.h_bias, 1) - v @ self.T @ tf.transpose(hs)
-        return e
+        return tf.reduce_sum(e)
 
     def train(self, data):
         """
@@ -114,14 +114,14 @@ class BoltzmannMachine(Hopfield):
                 v_j = data[j:j + self.batch_size, :]
                 v_j = tf.convert_to_tensor(v_j, dtype='float32')
                 v0, vk = self.contrastive_divergence(v_j)
-                loss += tf.reduce_mean(tf.abs(self.energy(v0)[0][0] - self.energy(vk)[0][0]))
+                loss += tf.reduce_mean(tf.abs(self.energy(v0) - self.energy(vk)))
             print(f'epoch {i} - loss: {loss}')
 
     def inference(self, v):
         """
         Inference
         Args:
-            v (nd.array): input data
+            v (tensor): input data
 
         Returns:
             nd.array: sampled output
