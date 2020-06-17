@@ -23,9 +23,10 @@ class BoltzmannMachine(Hopfield):
         self.batch_size = batch_size
         self.lr = lr
         self.k = k
-        self.T = np.random.uniform(-0.1, 0.1, size=(self.n_visible_units, self.n_hidden_units))
-        self.v_bias = np.zeros(n_visible_units)
-        self.h_bias = np.zeros(n_hidden_units)
+        self.T = tf.random.uniform((self.n_visible_units, self.n_hidden_units), minval=-0.1, maxval=0.1,
+                                   dtype='float32')
+        self.v_bias = tf.zeros(n_visible_units, dtype='float32')
+        self.h_bias = tf.zeros(n_hidden_units, dtype='float32')
 
     def sample_hidden(self, v):
         """
@@ -36,8 +37,9 @@ class BoltzmannMachine(Hopfield):
         Returns:
             nd.array, nd.array
         """
-        probability_h_given_v = self.sigmoid(v @ self.T + self.h_bias)
-        return probability_h_given_v, np.random.binomial(1, probability_h_given_v)
+        probability_h_given_v = tf.sigmoid(v @ self.T + self.h_bias)
+        return probability_h_given_v, tf.keras.backend.random_binomial(probability_h_given_v.shape,
+                                                                       probability_h_given_v)
 
     def sample_visible(self, h):
         """
@@ -48,8 +50,9 @@ class BoltzmannMachine(Hopfield):
         Returns:
             nd.array, nd.array
         """
-        probability_v_given_h = self.sigmoid(h @ self.T.T + self.v_bias)
-        return probability_v_given_h, np.random.binomial(1, probability_v_given_h)
+        probability_v_given_h = tf.sigmoid(h @ tf.transpose(self.T) + self.v_bias)
+        return probability_v_given_h, tf.keras.backend.random_binomial(probability_v_given_h.shape,
+                                                                       probability_v_given_h)
 
     def update(self, v0, vk, p_h0, p_hk):
         """
@@ -61,9 +64,9 @@ class BoltzmannMachine(Hopfield):
             p_hk (nd.array): Probability of h = 1 given vk
 
         """
-        self.T += self.lr * (v0.T @ p_h0 - vk.T @ p_hk) / self.batch_size
-        self.v_bias += self.lr * (np.mean(v0 - vk, axis=0))
-        self.h_bias += self.lr * (np.mean(p_h0 - p_hk, axis=0))
+        self.T += self.lr * (tf.transpose(v0) @ p_h0 - tf.transpose(vk) @ p_hk) / self.batch_size
+        self.v_bias += self.lr * (tf.reduce_mean(v0 - vk, axis=0))
+        self.h_bias += self.lr * (tf.reduce_mean(p_h0 - p_hk, axis=0))
 
     def contrastive_divergence(self, v):
         """
@@ -74,7 +77,7 @@ class BoltzmannMachine(Hopfield):
         Returns:
             nd.array, nd.array: original input data and sampled data
         """
-        vk = v.copy()
+        vk = v
         ph_v, _ = self.sample_hidden(v)
 
         # Gibbs sampling
@@ -96,7 +99,7 @@ class BoltzmannMachine(Hopfield):
             float: energy
         """
         _, hs = self.sample_hidden(v)
-        e = - v @ self.v_bias - hs @ self.h_bias - v @ self.T @ hs.T
+        e = - v @ tf.expand_dims(self.v_bias, 1) - hs @ tf.expand_dims(self.h_bias, 1) - v @ self.T @ tf.transpose(hs)
         return e
 
     def train(self, data):
@@ -109,8 +112,9 @@ class BoltzmannMachine(Hopfield):
             loss = 0
             for j in range(0, len(data), self.batch_size):
                 v_j = data[j:j + self.batch_size, :]
+                v_j = tf.convert_to_tensor(v_j, dtype='float32')
                 v0, vk = self.contrastive_divergence(v_j)
-                loss += np.mean(np.abs(self.energy(v0)[0][0] - self.energy(vk)[0][0]))
+                loss += tf.reduce_mean(tf.abs(self.energy(v0)[0][0] - self.energy(vk)[0][0]))
             print(f'epoch {i} - loss: {loss}')
 
     def inference(self, v):
@@ -122,10 +126,7 @@ class BoltzmannMachine(Hopfield):
         Returns:
             nd.array: sampled output
         """
-        hp, _ = self.sample_hidden(v)
+        v = tf.convert_to_tensor(v, dtype='float32')
+        hp, _ = self.sample_hidden(tf.expand_dims(v, 0))
         vk, _ = self.sample_visible(hp)
-        return vk
-
-    @staticmethod
-    def sigmoid(x):
-        return 1 / (1 + np.exp(-x))
+        return np.array(vk)
