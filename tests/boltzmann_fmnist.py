@@ -15,16 +15,16 @@ fashion_mnist = keras.datasets.fashion_mnist
 # Preprocess
 row, col = train_images[0].shape
 data = train_images[5:9]
-data = [normalize_binarize(i) for i in data]
+data = [normalize_binarize(i, 0) for i in data]
 data = [i.flatten() for i in data]
 
 # Train network
 print("Training network...")
-bm = BoltzmannMachine(n_visible_units=data[0].shape[0], n_hidden_units=500, n_epochs=100, lr=0.1)
+bm = BoltzmannMachine(n_visible_units=data[0].shape[0], n_hidden_units=500, n_epochs=1000, lr=0.01, batch_size=4)
 bm.train(np.array(data))
 
 # Get noisy data
-noise_data = [noise_image(i, .1) for i in data]
+noise_data = [noise_image(i, .3, min_val=0) for i in data]
 
 # Run network
 print("Running network on noisy data...")
