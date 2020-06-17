@@ -1,1 +1,5 @@
 env
+boltzmann/__pycache__/
+hopfield/__pycache__/
+tests/__pycache__/
+preprocess/__pycache__/
