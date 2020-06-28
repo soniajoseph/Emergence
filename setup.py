@@ -1,5 +1,8 @@
 import setuptools
 
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
 setuptools.setup(
     name="emergence",
     version="0.0.1",
@@ -9,6 +12,7 @@ setuptools.setup(
     # long_description=long_description,
     # long_description_content_type="text/markdown",
     url="https://github.com/soniajoseph/Emergence",
+    install_requires=requirements,
     # packages=setuptools.find_packages(),
     # classifiers=[
     #     "Programming Language :: Python :: 3",
