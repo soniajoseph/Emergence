@@ -1,4 +1,5 @@
 env
+emergence/__pycache__/
 emergence/boltzmann/__pycache__/
 emergence/hopfield/__pycache__/
 emergence/tests/__pycache__/
