@@ -4,3 +4,6 @@ emergence/boltzmann/__pycache__/
 emergence/hopfield/__pycache__/
 emergence/tests/__pycache__/
 emergence/preprocess/__pycache__/
+.idea
+emergence.egg-info
+
