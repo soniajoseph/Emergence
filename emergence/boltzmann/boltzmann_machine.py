@@ -114,7 +114,7 @@ class BoltzmannMachine(Hopfield):
                 v_j = data[j:j + self.batch_size, :]
                 v_j = tf.convert_to_tensor(v_j, dtype='float32')
                 v0, vk = self.contrastive_divergence(v_j)
-                loss += tf.reduce_mean(tf.abs(self.energy(v0) - self.energy(vk)))
+                loss += tf.reduce_mean(tf.abs(v0 - vk))
             print(f'epoch {i} - loss: {loss}')
 
     def inference(self, v):
