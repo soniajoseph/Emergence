@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from hopfield.hopfield import Hopfield
+from emergence.hopfield.hopfield import Hopfield
 
 
 class BoltzmannMachine(Hopfield):

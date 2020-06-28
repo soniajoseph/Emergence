@@ -5,9 +5,9 @@ Training the network does not store the image itself, but updates the network's 
 
 from tensorflow import keras
 
-from hopfield import Hopfield
-from preprocess.preprocess_image import *
-from utils.graphing import visualize
+from emergence.hopfield import Hopfield
+from emergence.preprocess.preprocess_image import *
+from emergence.utils.graphing import visualize
 
 print("Loading fashion MNIST...")
 fashion_mnist = keras.datasets.fashion_mnist

@@ -6,18 +6,18 @@ This is a research library to study the emergent properties of undirected neural
 
 ## Setup
 
-Set up your local environment and download the requirements.txt.
+Set up your local environment and install package.
 
 ```python
 python3 -m venv env
-pip3 install -r requirements.txt
+pip3 install -e .
 ```
 
 See /tests for sample use cases.
 
 ## Hopfield Networks
 
-<img src="images/FMNIST.png" width="500" class="center">
+<img src="emergence/images/FMNIST.png" width="500" class="center">
 
 Hopfield networks are fascinating one-shot data-denoisers. We train the network to "remember" the top row of fashion MNIST images using Hebbian learning. The network does not store the actual image, but encodes information of the image in its weights.
 
@@ -28,15 +28,15 @@ Then, we add noise to the image, randomly setting 30% of the pixels to the oppos
 <table style="width:100%">
   <tr>
     <td><b>Original</b></td>
-    <td><img src="images/FMNIST_orig.png" width="100"></td>
+    <td><img src="emergence/images/FMNIST_orig.png" width="100"></td>
   </tr>
   <tr>
     <td><b>Noisy</b></td>
-    <td><img src="images/FMNIST_test.png" width="100"></td>
+    <td><img src="emergence/images/FMNIST_test.png" width="100"></td>
   </tr>
   <tr>
     <td><b>Reconstructed</b></td>
-    <td><img src="images/FMNIST_return.png" width="100"></td>
+    <td><img src="emergence/images/FMNIST_return.png" width="100"></td>
   </tr>
 </table>
 
