@@ -5,8 +5,8 @@ Store images from fashion MNIST in a Boltzmann network.
 import matplotlib.pyplot as plt
 from tensorflow import keras
 
-from boltzmann.boltzmann_machine import BoltzmannMachine
-from preprocess.preprocess_image import *
+from emergence.boltzmann.boltzmann_machine import BoltzmannMachine
+from emergence.preprocess.preprocess_image import *
 
 print("Loading fashion MNIST...")
 fashion_mnist = keras.datasets.fashion_mnist
