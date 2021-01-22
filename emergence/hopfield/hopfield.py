@@ -1,8 +1,8 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
-class Hopfield():
-
+class Hopfield:
     def __init__(self):
         self.T = None
 
@@ -17,6 +17,7 @@ class Hopfield():
         Returns:
           V_hat (nx1 array): Updated V_prime vector.
         """
+        num_neurons = len(self.T)
         U = 0
         V_hat = V_noise.copy()
         for t in range(iterations):
