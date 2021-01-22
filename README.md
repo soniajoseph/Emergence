@@ -2,7 +2,7 @@
 
 This is a research library to study the emergent properties of undirected neural networks, including Hopfield networks and Boltzmann machines.
 
-Contributors: Sonia Joseph, Adreanne Lemay (andreanne-lemay)
+Contributors: Sonia Joseph, Andreanne Lemay (andreanne-lemay)
 
 
 **To read more about Hopfield networks, see the primer I wrote [here](https://soniajoseph.github.io/computational%20neuroscience/neural-dynamics-primer/).**
