@@ -3,16 +3,11 @@ Store images from fashion MNIST in a Hopfield network.
 Training the network does not store the image itself, but updates the network's weights.
 """
 
-import sys
-import os
+from tensorflow import keras
 
 from emergence.hopfield import Hopfield
-from emergence.preprocess.preprocess_image import * 
-
-import matplotlib.pyplot as plt
-
-import tensorflow as tf
-from tensorflow import keras
+from emergence.preprocess.preprocess_image import *
+from emergence.utils.graphing import visualize
 
 print("Loading fashion MNIST...")
 fashion_mnist = keras.datasets.fashion_mnist
@@ -36,14 +31,12 @@ noise_data = [noise_image(i, .3) for i in data]
 print("Running network on noisy data...")
 data_hat = [hn.run(i, 1) for i in noise_data]
 
-# Plot
-print("Plotting results...")
-total_data = data
-total_data += noise_data
+total_data = [i for i in data]
+total_data += [i for i in noise_data]
 total_data += data_hat
-plt.figure()
-for i in range(1, len(total_data)+1):
-    plt.subplot(3, 4, i)
-    plt.matshow(total_data[i-1].reshape(row,col), fignum=False)
-plt.setp(plt.gcf().get_axes(), xticks=[], yticks=[]);
-plt.show()
+
+# Visualize inputs and outputs
+visualize(np.array(total_data), n_plots=(3, 4), image_shape=(row, col))
+
+# Visualize weights
+visualize(hn.T, n_plots=(28, 28), image_shape=(row, col))
